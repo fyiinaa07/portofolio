@@ -3,140 +3,417 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portofolio finaa</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Portofolio Finaa</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+    
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+    <style>
+        /* Variabel Warna */
+        :root {
+            --bg-color-start: #0f0c29;
+            --bg-color-mid: #302b63;
+            --bg-color-end: #24243e;
+            --card-color: rgba(255, 255, 255, 0.05);
+            --primary-accent: #12c2e9;
+            --secondary-accent: #c471ed;
+            --font-color: #f0f0f0;
+            --font-color-secondary: #c0c0c0;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* === RESET & DASAR === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(-45deg, var(--bg-color-start), var(--bg-color-mid), var(--bg-color-end));
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: var(--font-color);
+            line-height: 1.7;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 0 2rem;
+        }
+
+        h1, h2 { font-weight: 600; }
+        h1 { font-size: 3.2rem; color: #fff; }
+        h2 { 
+            font-size: 2.8rem; 
+            text-align: center; 
+            margin-bottom: 4rem;
+            background: -webkit-linear-gradient(45deg, var(--primary-accent), var(--secondary-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        section { padding: 6rem 0; }
+        a { text-decoration: none; color: var(--primary-accent); }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            background: linear-gradient(45deg, var(--primary-accent), var(--secondary-accent));
+            color: #fff;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            margin-top: 1rem;
+        }
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(18, 194, 233, 0.4);
+        }
+
+        /* === HEADER & NAVIGASI === */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .header-container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.8rem; font-weight: 700; color: #fff; }
+        .nav-links { list-style: none; display: flex; }
+        .nav-links li { margin-left: 2.5rem; }
+        .nav-links a { color: var(--font-color); font-weight: 400; transition: color 0.3s ease; }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary-accent); }
+        .menu-toggle { display: none; font-size: 1.8rem; color: #fff; cursor: pointer; }
+
+        /* === HOME SECTION === */
+        #home {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+        .home-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 4rem;
+            width: 100%;
+        }
+        .home-text { max-width: 60%; }
+        .home-text h3 { font-size: 1.5rem; color: var(--font-color-secondary); }
+        .home-text p { margin: 1.5rem 0 2.5rem; color: var(--font-color-secondary); }
+        #typed-text {
+            background: -webkit-linear-gradient(45deg, var(--primary-accent), var(--secondary-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .home-img img {
+            width: 320px;
+            height: 320px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 7px solid var(--card-color);
+        }
+
+        /* === TENTANG SAYA SECTION === */
+        #about {
+            background: var(--card-color);
+            border-radius: 20px;
+            padding: 4rem;
+            border: 1px solid var(--border-color);
+        }
+        #about p {
+            text-align: center;
+            max-width: 800px;
+            margin: auto;
+            color: var(--font-color-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* === PROYEK SECTION === */
+        .proyek-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+        .proyek-card {
+            background: var(--card-color);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+        }
+        .proyek-card:hover { transform: translateY(-10px); }
+        .proyek-img img {
+            width: 100%; height: 220px; object-fit: cover;
+        }
+        .proyek-info { padding: 1.5rem; }
+        .proyek-info h3 { font-size: 1.3rem; margin-bottom: 0.5rem; color: #fff; }
+        .proyek-info p { color: var(--font-color-secondary); margin-bottom: 1.5rem; }
+
+        /* === KONTAK SECTION === */
+        .contact-container { text-align: center; }
+        .contact-container p { max-width: 600px; margin: 0 auto 3rem; color: var(--font-color-secondary); }
+        .social-links a {
+            font-size: 2.5rem;
+            margin: 0 1.5rem;
+            color: var(--font-color-secondary);
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        .social-links a:hover {
+            color: var(--primary-accent);
+            transform: translateY(-5px);
+        }
+
+        /* === FOOTER === */
+        .footer {
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--font-color-secondary);
+        }
+    /* === Animasi Floating & Glow === */
+@keyframes pulse-glow {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 10px rgba(18, 194, 233, 0.5),
+                    0 0 20px rgba(196, 113, 237, 0.3);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(18, 194, 233, 0.8),
+                    0 0 40px rgba(196, 113, 237, 0.5);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 10px rgba(18, 194, 233, 0.5),
+                    0 0 20px rgba(196, 113, 237, 0.3);
+    }
+}
+
+@keyframes floating-rotate {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-15px) rotate(3deg);
+    }
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+}
+
+/* === Foto Profil dengan Dua Animasi === */
+.home-img img {
+    width: 320px;
+    height: 320px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 7px solid var(--card-color);
+
+    /* Gabungan dua animasi */
+    animation: pulse-glow 3s infinite ease-in-out,
+               floating-rotate 6s infinite ease-in-out;
+    transition: transform 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+
+/* Efek saat di-hover */
+.home-img img:hover {
+    transform: scale(1.1) rotate(6deg);
+    box-shadow: 0 0 25px rgba(18, 194, 233, 1),
+                0 0 50px rgba(196, 113, 237, 0.8);
+}
+
+    </style>
 </head>
 <body>
 
-    <header>
-        <nav>
-            <div class="logo">Finaa</div>
-            <ul>
-                <li><a href="#tentang">Tentang Saya</a></li>
-                <li><a href="#proyek">Proyek</a></li>
-                <li><a href="#kontak">Kontak</a></li>
+    <header class="header">
+        <div class="container header-container">
+            <a href="#" class="logo">Portofolio Finaa</a>
+            <ul class="nav-links">
+                <li><a href="#home" class="nav-item">Home</a></li>
+                <li><a href="#about" class="nav-item">Tentang Saya</a></li>
+                <li><a href="#proyek" class="nav-item">Proyek</a></li>
+                <li><a href="#contact" class="nav-item">Kontak</a></li>
             </ul>
-        </nav>
+            <div class="menu-toggle"><i class="fas fa-bars"></i></div>
+        </div>
     </header>
 
     <main>
-        <section id="hero">
-            <div class="hero-content">
-                <h1>Haii, Aku Aqilah Putri Rufina</h1>
-                <p class="subtitle text-indigo-600 text-lg font-semibold">Web Developer</p>
-                <p class="description text-gray-700 mt-2">
-                    Hai, selamat datang di portofolio saya! Saya suka mendesain dan membangun tampilan website yang menarik serta ramah pengguna. 
-                    Misi saya adalah menggabungkan desain kreatif dan teknologi modern untuk menghadirkan pengalaman digital yang menyenangkan. 
-                    Saya berfokus pada pengembangan aplikasi web yang cepat, responsif, dan dapat diskalakan, dengan keahlian dalam HTML, CSS, dan JavaScript.
-                </p>
-
-                <a href="#kontak" class="cta-button">Hubungi Saya</a>
+        <section id="home">
+            <div class="container">
+                <div class="home-content">
+                    <div class="home-text" data-aos="fade-right">
+                        <h3>Halo, saya</h3>
+                        <h1>Aqilah Putri Rufina</h1>
+                        <h3>Seorang <span id="typed-text"></span></h3>
+                        <p>Saya seorang desainer dan pengembang web yang berfokus pada menciptakan pengalaman digital yang kreatif, fungsional, dan menarik. Dengan passion di dunia teknologi, saya selalu berusaha menghadirkan karya yang memberikan nilai bagi pengguna.</p>
+                        <a href="#contact" class="btn">Hubungi Saya</a>
+                    </div>
+                    <div class="home-img" data-aos="fade-left">
+                        <img src="naa.jpeg" alt="Foto Profil Anda">
+                    </div>
+                </div>
             </div>
-            <div class="hero-image">
-                <img src="nana.jpeg" alt="Foto Profil Finaa">
-            </div>            
         </section>
 
-        <section id="tentang">
-            <h2>Tentang Saya</h2>
-            <p>
-                Haii! Nama Panggilanku <strong> Finaa </strong>. Aku memiliki latar belakang pendidikan di bidang 
-                <strong> RPL (Rekayasa Perangkat Lunak) </strong> dan tertarik pada pengembangan web modern.
-                Saat ini aku fokus mempelajari dan mengembangkan keterampilan dalam <strong>HTML, CSS, dan JavaScript</strong>.
-                <br><br>
-                Aku selalu berusaha untuk terus belajar dan berkembang agar dapat menciptakan solusi digital yang berguna dan berdampak positif.
-            </p>
-            <div class="skills">
-                <h3>Keahlian Utama</h3>
-            
-                <div class="skill">
-                    <p>HTML</p>
-                    <div class="skill-bar">
-                        <div class="skill-fill html"></div>
-                    </div>
-                </div>
-            
-                <div class="skill">
-                    <p>CSS</p>
-                    <div class="skill-bar">
-                        <div class="skill-fill css"></div>
-                    </div>
-                </div>
-            
-                <div class="skill">
-                    <p>JavaScript</p>
-                    <div class="skill-bar">
-                        <div class="skill-fill js"></div>
-                    </div>
-                </div>
-            
-                <div class="skill">
-                    <p>React.js</p>
-                    <div class="skill-bar">
-                        <div class="skill-fill react"></div>
-                    </div>
-                </div>
-            
-                <div class="skill">
-                    <p>Node.js</p>
-                    <div class="skill-bar">
-                        <div class="skill-fill node"></div>
-                    </div>
-                </div>
-            
-                <div class="skill">
-                    <p>UI/UX Design</p>
-                    <div class="skill-bar">
-                        <div class="skill-fill design"></div>
-                    </div>
-                </div>
+        <section id="about">
+            <div class="container" data-aos="fade-up">
+                <h2>Tentang Saya</h2>
+                <p>
+                    Saya adalah seorang kreator digital yang memiliki ketertarikan besar di bidang desain UI/UX dan pengembangan web. Latar belakang saya dalam teknologi dan desain memungkinkan saya untuk memahami bagaimana menggabungkan estetika dengan fungsionalitas dalam setiap proyek yang saya kerjakan.  
+                    <br><br>
+                    Berpengalaman dalam berbagai proyek, mulai dari pembuatan website personal hingga platform bisnis berskala kecil, saya selalu berusaha menghadirkan hasil yang tidak hanya menarik secara visual tetapi juga ramah pengguna. Saya percaya bahwa desain yang baik harus mampu memecahkan masalah nyata dan memberikan dampak positif.  
+                    <br><br>
+                    Dengan semangat untuk terus belajar, saya senang mengeksplorasi teknologi baru dan tren desain terkini. Tujuan saya adalah membantu bisnis dan individu membangun kehadiran digital yang kuat dan profesional.
+                </p>
             </div>
-            
         </section>
 
         <section id="proyek">
-            <h2>Proyek Saya</h2>
-            <div class="project-grid">
-                <div class="project-card">
-                    <img src="images/proyek1.jpg" alt="Gambar Proyek 1">
-                    <h3>Nama Proyek 1</h3>
-                    <p>Deskripsi singkat tentang proyek ini, teknologi yang digunakan, dan apa peran Anda dalam proyek tersebut.</p>
-                </div>
-                <div class="project-card">
-                    <img src="images/proyek2.jpg" alt="Gambar Proyek 2">
-                    <h3>Nama Proyek 2</h3>
-                    <p>Deskripsi singkat tentang proyek ini, teknologi yang digunakan, dan apa peran Anda dalam proyek tersebut.</p>
-                </div>
-                <div class="project-card">
-                    <img src="images/proyek3.jpg" alt="Gambar Proyek 3">
-                    <h3>Nama Proyek 3</h3>
-                    <p>Deskripsi singkat tentang proyek ini, teknologi yang digunakan, dan apa peran Anda dalam proyek tersebut.</p>
+            <div class="container">
+                <h2 data-aos="fade-up">Proyek Pilihan</h2>
+                <div class="proyek-grid">
+                    <div class="proyek-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="proyek-img">
+                            <img src="webb.webp" alt="Gambar Proyek">
+                        </div>
+                        <div class="proyek-info">
+                            <h3>Website Portofolio</h3>
+                            <p>Sebuah website personal yang dirancang untuk menampilkan karya, pengalaman, dan informasi kontak dengan desain modern dan responsif.</p>
+                            <a href="#" target="_blank">Lihat Detail &rarr;</a>
+                        </div>
+                    </div>
+                    <div class="proyek-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="proyek-img">
+                            <img src="blanja.webp" alt="Gambar Proyek">
+                        </div>
+                        <div class="proyek-info">
+                            <h3>Proyek Figma</h3>
+                            <p>Platform toko online sederhana untuk UMKM, dilengkapi dengan fitur katalog produk dan sistem pemesanan online.</p>
+                            <a href="#" target="_blank">Lihat Detail &rarr;</a>
+                        </div>
+                    </div>
+                    <div class="proyek-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="proyek-img">
+                            <img src="list.jpg" alt="Gambar Proyek">
+                        </div>
+                        <div class="proyek-info">
+                            <h3>Aplikasi To-Do List</h3>
+                            <p>Aplikasi web untuk mengelola tugas harian dengan antarmuka yang simpel dan mudah digunakan.</p>
+                            <a href="#" target="_blank">Lihat Detail &rarr;</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section id="kontak">
-            <h2>Hubungi Saya</h2>
-            <p>Saya selalu terbuka untuk diskusi, kolaborasi, atau peluang baru. Jangan ragu untuk menghubungi saya:</p>
-            <div class="social-links">
-                <a href="mailto:emailanda@example.com" class="social-icon" aria-label="Email">
-                    <i class="fas fa-envelope"></i>
-                </a>
-                <a href="https://wa.me/6281234567890" target="_blank" class="social-icon" aria-label="WhatsApp">
-                    <i class="fab fa-whatsapp"></i>
-                </a>
-                <a href="https://instagram.com/username-anda" target="_blank" class="social-icon" aria-label="Instagram">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a href="https://github.com/username-anda" target="_blank" class="social-icon" aria-label="GitHub">
-                    <i class="fab fa-github"></i>
-                </a>
+        <section id="contact">
+            <div class="container contact-container">
+                <h2 data-aos="fade-up">Terhubung Dengan Saya</h2>
+                <p data-aos="fade-up" data-aos-delay="50">
+                    Saya selalu terbuka untuk diskusi, kolaborasi, atau sekadar menyapa. Jangan ragu untuk menghubungi saya melalui platform favorit Anda di bawah ini.
+                </p>
+                <div class="social-links" data-aos="fade-up" data-aos-delay="100">
+                    <a href="https://www.tiktok.com/@urlove_fynaa" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://www.instagram.com/fyiinaa__" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://wa.me/087761344085" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                </div>
             </div>
         </section>
     </main>
 
+    <footer class="footer">
+        <p>&copy; Portofolio Finaa . Dibuat dengan sepenuh hati.</p>
+    </footer>
 
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        // Inisialisasi AOS (Animate On Scroll)
+        AOS.init({
+            duration: 1000,
+            once: true,
+        });
+
+        // Inisialisasi Typed.js (Efek Teks Mengetik)
+        var typed = new Typed('#typed-text', {
+            // Ganti teks di bawah ini sesuai keahlian Anda
+            strings: ['Web Developer'],
+            typeSpeed: 70,
+            backSpeed: 50,
+            loop: true
+        });
+
+        // Logika untuk Mobile Menu (Hamburger)
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            const icon = menuToggle.querySelector('i');
+            if (icon.classList.contains('fa-bars')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+        
+        // Menutup menu saat link di klik (untuk mobile)
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                    menuToggle.querySelector('i').classList.remove('fa-times');
+                    menuToggle.querySelector('i').classList.add('fa-bars');
+                }
+            });
+        });
+
+        // Active Nav Link on Scroll
+        const sections = document.querySelectorAll('section');
+        const navLi = document.querySelectorAll('.nav-links a');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 150) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navLi.forEach(a => {
+                a.classList.remove('active');
+                if (a.getAttribute('href') == '#' + current) {
+                    a.classList.add('active');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
